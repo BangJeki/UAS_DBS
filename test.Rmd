@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r}
+conn <- dbConnect(MariaDB(),
+                  user = 'root',
+                  password = '',
+                  dbname = 'bang jeki',
+                  host = 'localhost')
+
+knitr::opts_chunk$set(connection="conn")
+```
+
+```{sql, connection = conn}
+select *
+         from suppliers s 
+         left join products p
+         using(SupplierID)
+         left join categories c
+         using(CategoryID)
+         left join orderdetails od
+         using(ProductID)
+         left join orders o
+         using(OrderID)
+         
+         
+
+```
+
+```{sql, connection = conn}
+create table data as 
+select *
+from suppliers s 
+left join products p
+using(SupplierID)
+left join categories c
+using(CategoryID)
+left join orderdetails od
+using(ProductID)
+left join orders o
+using(OrderID)
+```
+
+```{sql, connection = conn}
+alter table data
+change orderdate orderdate date null
+```
+
+```{sql, connection = conn}
+alter table data
+drop column customerid,
+drop column employeeid,
+drop column shipperid;
+```
+
+```{sql, connection = conn}
+select *
+  from data
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
